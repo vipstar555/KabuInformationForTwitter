@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2015
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KabuInformationForTwitter", "KabuInformationForTwitter\KabuInformationForTwitter.csproj", "{A1523EB6-D788-4F0B-95D4-6C1C2DC533F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KabutanLib", "KabutanLib\KabutanLib.csproj", "{9A018B9F-2D4E-42E3-B4D3-C1D0C776AF01}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1523EB6-D788-4F0B-95D4-6C1C2DC533F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1523EB6-D788-4F0B-95D4-6C1C2DC533F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1523EB6-D788-4F0B-95D4-6C1C2DC533F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1523EB6-D788-4F0B-95D4-6C1C2DC533F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A018B9F-2D4E-42E3-B4D3-C1D0C776AF01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A018B9F-2D4E-42E3-B4D3-C1D0C776AF01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A018B9F-2D4E-42E3-B4D3-C1D0C776AF01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A018B9F-2D4E-42E3-B4D3-C1D0C776AF01}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8D5FF6F9-F6D5-4DFD-89BD-A1AF3ADD07F6}
+	EndGlobalSection
+EndGlobal
