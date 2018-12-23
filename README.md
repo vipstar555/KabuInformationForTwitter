@@ -1,0 +1,2 @@
+# KabuInformationForTwitter
+株関連のニュース等を常駐で拾ってツイッターで呟くソフトです。
