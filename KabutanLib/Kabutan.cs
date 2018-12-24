@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using AngleSharp;
 using System.Net;
 using AngleSharp.Parser.Html;
+using System.ComponentModel.DataAnnotations;        // 参照を追加。
+using System.ComponentModel.DataAnnotations.Schema; // 参照を追加。
 
 namespace KabutanLib
 {
@@ -36,21 +38,30 @@ namespace KabutanLib
                     Title = tals[1].TextContent,
                     DateTime = DateTime.TryParse(tr.QuerySelector("time").GetAttribute("datetime"), out var datetime) ? datetime : DateTime.MinValue,
                     PDFURL = tals[1].QuerySelector("a").GetAttribute("href").ToString(),
-            };
-
+                };
             }
 
         }
     }
-
+    [Table("KabutanKaizi")]
     public class KaiziItem
     {
+        [Key]
+        [Column("id")]
+        public int Id { get; set; }
+        [Column("code")]
         public int Code { get; set; }
+        [Column("name")]
         public string Name { get; set; }
+        [Column("market")]
         public string Market { get; set; }
+        [Column("infotype")]
         public string InfoType { get; set; }
+        [Column("title")]
         public string Title { get; set; }
+        [Column("datetime")]
         public DateTime DateTime { get; set; }
+        [Column("pdfurl")]
         public string PDFURL { get; set; }
     }
 }

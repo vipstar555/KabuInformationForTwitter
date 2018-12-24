@@ -36,28 +36,8 @@ namespace KabutanLib
                 .Append($"User Id={sr.ReadLine()};")
                 .Append($"Password={sr.ReadLine()};");
                 return new NpgsqlConnection(sb.ToString());
-            }                            
-        }
-        public DbSet<Table> Tests { get; set; }
-    }
-    public class KabutanPostgreSQL
-    {
-        static public void TestSQL()
-        {
-            var a = new KabutanPostgreSQLContext();
-            {
-                var sds = a.Tests.ToList();
-                return;
             }
         }
-    }
-    [Table("Test")]
-    public class Table
-    {
-        [Key]
-        [Column("id")]
-        public int ID { get; set; }
-        [Column("name")]
-        public string Name { get; set; }
+        public DbSet<KaiziItem> KaiziItems { get; set; }
     }
 }

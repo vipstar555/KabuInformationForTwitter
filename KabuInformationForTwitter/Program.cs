@@ -11,7 +11,13 @@ namespace KabuInformationForTwitter
     {
         static void Main(string[] args)
         {
-            KabutanPostgreSQL.TestSQL();
+            var kabutans = KaiziClient.GetKaiziItems(1);
+            var con = new KabutanPostgreSQLContext();
+            foreach(var kabutan in kabutans)
+            {
+                con.KaiziItems.Add(kabutan);
+            }
+            con.SaveChanges();
         }
     }
 }
