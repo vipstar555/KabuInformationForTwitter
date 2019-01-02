@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KabuInformationForTwitter",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KabutanLib", "KabutanLib\KabutanLib.csproj", "{9A018B9F-2D4E-42E3-B4D3-C1D0C776AF01}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YahooFinanceDbContext", "YahooFinanceDbContext\YahooFinanceDbContext.csproj", "{AFC7459D-793A-40D6-B990-077EFE2820C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{9A018B9F-2D4E-42E3-B4D3-C1D0C776AF01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A018B9F-2D4E-42E3-B4D3-C1D0C776AF01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A018B9F-2D4E-42E3-B4D3-C1D0C776AF01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFC7459D-793A-40D6-B990-077EFE2820C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFC7459D-793A-40D6-B990-077EFE2820C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFC7459D-793A-40D6-B990-077EFE2820C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFC7459D-793A-40D6-B990-077EFE2820C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

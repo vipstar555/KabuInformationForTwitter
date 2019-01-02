@@ -8,22 +8,37 @@ using System.Net;
 using AngleSharp.Parser.Html;
 using System.ComponentModel.DataAnnotations;        // 参照を追加。
 using System.ComponentModel.DataAnnotations.Schema; // 参照を追加。
+using System.IO;
 
 namespace KabutanLib
 {
+    //株探の適時開示操作クラス
     static public class KaiziClient
     {
         //{0}:何ページ目
         const string KaiziURL = @"https://kabutan.jp/disclosures/?kubun=&page={0}";
-        
-        static public IEnumerable<KaiziItem> GetKaiziItems(int page)
+
+        //株探の適時開示から開示クラスを作成する
+        static public IEnumerable<KaiziItem> WebDownloadKaiziItems(int page)
         {
-            var wc = new System.Net.WebClient();
-            var stream = wc.OpenRead(string.Format(KaiziURL, page));
+            var wc = new System.Net.WebClient();    //株探クライアント
+            Stream stream;  //適時開示html
+            try
+            {
+                stream = wc.OpenRead(string.Format(KaiziURL, page));    //株探開示からHtml取得
+            }
+            catch (Exception e)
+            {
+                //html取得失敗でエラーログ
+                Console.WriteLine("Error:株探開示取得失敗　" + DateTime.Now.ToString("yyyyMMdd") + e.ToString());
+                yield break;
+            }
             var parser = new HtmlParser();
-            var doc = parser.Parse(stream);
-            var trs = doc.QuerySelectorAll("#main > div.disclosure_box > table > tbody > tr");
-            foreach(var tr in trs)
+            var doc = parser.Parse(stream); //html解析用
+            //適時開示
+            var trs = doc.QuerySelectorAll("#main > div.disclosure_box > table > tbody > tr");       
+            //開示クラスを生成して返す
+            foreach (var tr in trs)
             {
                 //[0]:Code　[1]:Market
                 var tacs = tr.QuerySelectorAll("td.tac");
