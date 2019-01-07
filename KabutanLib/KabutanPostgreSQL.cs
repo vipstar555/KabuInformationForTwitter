@@ -9,14 +9,13 @@ using System.ComponentModel.DataAnnotations;        // 参照を追加。
 using System.ComponentModel.DataAnnotations.Schema; // 参照を追加。
 using Npgsql;
 using System.IO;
+using System.Configuration;
 
 namespace KabutanLib
 {
     //Entityframework=>株探DB操作クラス
     public class KabutanPostgreSQLContext : DbContext
     {
-        const string configFilePath = "../../../metadata/test.txt";
-
         public string DefaultSchema { get; private set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
             => modelBuilder.HasDefaultSchema(DefaultSchema);
@@ -28,16 +27,14 @@ namespace KabutanLib
         }
         static private NpgsqlConnection Con()
         {
-            using (var sr = new StreamReader(configFilePath))
-            {
-                var sb = new StringBuilder();
-                sb.Append($"Server={sr.ReadLine()};")
-                .Append($"Port={sr.ReadLine()};")
-                .Append($"Database={sr.ReadLine()};")
-                .Append($"User Id={sr.ReadLine()};")
-                .Append($"Password={sr.ReadLine()};");
+            var kabutanPostgreSQLcon = ConfigurationManager.AppSettings;
+            var sb = new StringBuilder();
+                sb.Append($"Server={kabutanPostgreSQLcon.Get("Server")};")
+                .Append($"Port={kabutanPostgreSQLcon.Get("Port")};")
+                .Append($"Database={kabutanPostgreSQLcon.Get("Database")};")
+                .Append($"User Id={kabutanPostgreSQLcon.Get("User Id")};")
+                .Append($"Password={kabutanPostgreSQLcon.Get("Password")};");
                 return new NpgsqlConnection(sb.ToString());
-            }
         }
         public DbSet<KaiziItem> KaiziItems { get; set; }
     }
@@ -74,7 +71,7 @@ namespace KabutanLib
             {
                 return "";
             }
-            return con.KaiziItems.Where(x => x.DateTime == latestDatetimeKaiziItem.DateTime).OrderByDescending(x => x.Id).First().PDFURL;
+            return con.KaiziItems.Where(x => x.DateTime == latestDatetimeKaiziItem.DateTime).OrderBy(x => x.Id).First().PDFURL;
         }
         //pdfURLに重複があればtrue 無ければfalse
         static public bool IsDuplicatePDFURL(this KabutanPostgreSQLContext con, string pdfURL)

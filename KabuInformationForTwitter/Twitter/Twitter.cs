@@ -5,26 +5,24 @@ using System.Text;
 using System.Threading.Tasks;
 using CoreTweet;
 using System.IO;
+using System.Configuration;
 
 namespace KabuInformationForTwitter
 {
     public class TwitterCon
     {
         public Tokens tokens;
-        const string tokenFilePath = "../../../metadata/twetterAPI.txt";
         //コンストラクタ　ツイッター操作Token生成
         public TwitterCon()
         {
-            using (var sr = new StreamReader(tokenFilePath))
-            {
-                tokens = CoreTweet.Tokens.Create
+            var twitterTokenConfig = ConfigurationManager.AppSettings;            
+            tokens = CoreTweet.Tokens.Create
                         (
-                            sr.ReadLine(),
-                            sr.ReadLine(),
-                            sr.ReadLine(),
-                            sr.ReadLine()
+                            twitterTokenConfig.Get("consumerKey"),
+                            twitterTokenConfig.Get("consumerSecret"),
+                            twitterTokenConfig.Get("tokenKey"),
+                            twitterTokenConfig.Get("tokenSecret")
                         );
-            }
         }
     }
     //ツイッター操作用拡張クラス

@@ -6,20 +6,22 @@ using System.Threading.Tasks;
 using KabutanLib;
 using System.Threading;
 using System.Data;
+using System.Configuration;
+using System.Collections.Specialized;
 
 namespace KabuInformationForTwitter
 {
     class Program
     {
         static void Main(string[] args)
-        {                          
+        {
             var con = new YahooFinanceDbContext();  //時価総額取得用のDBクラス  
             var tweetCon = new TwitterCon();    //ツイッター操作クラス            
             var kaiziCon = new KabutanPostgreSQLContext();  //開示用PostgreSQL操作クラス            
             IEnumerable<KaiziItem> kaiziItems;  //開示内容保存用List
             string latestPdfURL = kaiziCon.LatestPDFURL();       //最もDatetimeが新しいPDFのURL(同時刻の場合は主キーIDが最新のもの優先)
             
-            int kabutanMaxPage = 6;   //株探適時開示MAXページ数
+            int kabutanMaxPage = 99;   //株探適時開示MAXページ数
             bool pageBreakFlag = true;
             while (true)
             {
@@ -42,14 +44,29 @@ namespace KabuInformationForTwitter
                             break;
                         }
                         //最新の時価総額取得
-                        var latestMarketCapitalization = con.TradeIndexs.Where(x => x.code == kaiziItem.Code).OrderByDescending(x => x.date).FirstOrDefault().marketCapitalization;
+                        var capTradeIndex = con.TradeIndexs.Where(x => x.code == kaiziItem.Code).OrderByDescending(x => x.date).FirstOrDefault();
+                        long latestMarketCapitalization = 0;
+                        if (capTradeIndex == null)
+                        {
+                            latestMarketCapitalization = 0;
+                        }
+                        else
+                        {
+                            latestMarketCapitalization = capTradeIndex.marketCapitalization;
+                        }
                         //DB登録
-                        if(kaiziCon.IsDuplicatePDFURL(kaiziItem.PDFURL) == false)
+                        if (kaiziCon.IsDuplicatePDFURL(kaiziItem.PDFURL) == false)
                         {
                             kaiziCon.KaiziItems.Add(kaiziItem);
                         }
                         //ツイート関連
-                        var tweetText = string.Format($"{kaiziItem.Code} {kaiziItem.Name} 時価{latestMarketCapitalization / 100000000.0:0.00}億\r\n{kaiziItem.Title}");
+                        string strMarketCap = "-";
+                        //0除算エラー回避
+                        if (latestMarketCapitalization != 0)
+                        {
+                            strMarketCap = string.Format($"{latestMarketCapitalization / 100000000.0:0.00}");
+                        }
+                        var tweetText = string.Format($"{kaiziItem.Code} {kaiziItem.Name} {strMarketCap}億\r\n{kaiziItem.Title}");
                         tweetCon.Tweet(tweetText, kaiziItem.PDFURL);
                         Console.WriteLine($"{DateTime.Now} Tweet" + tweetText + "\r\n" + kaiziItem.PDFURL);
                     }      
