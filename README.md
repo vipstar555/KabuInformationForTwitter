@@ -1,2 +1,4 @@
 # KabuInformationForTwitter
 株関連のニュース等を常駐で拾ってツイッターで呟くソフトです。
+2019/1/7追記
+\KabuInformationForTwitter\Metadata.configを追加してください(公開分はこのファイルが入っていません)
